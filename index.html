@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blockchain Lab DApp</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.17.0/ethers.umd.min.js"></script>
+</head>
+<body>
+  <main class="container">
+    <h1>Blockchain DApp</h1>
+    <p class="subtitle">Connect MetaMask to interact with SimpleStorage and Voting contracts.</p>
+
+    <section class="card">
+      <div class="row-between">
+        <div>
+          <strong>Wallet:</strong> <span id="walletAddress">Not connected</span><br />
+          <strong>Network:</strong> <span id="networkName">-</span>
+        </div>
+        <button id="connectBtn" type="button">Connect Wallet</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>1. SimpleStorage</h2>
+      <p><strong>Stored Number:</strong> <span id="storedNumber">-</span></p>
+      <div class="row">
+        <input id="numberInput" type="number" placeholder="Enter uint256 value" />
+        <button id="setNumberBtn" type="button">Set Number</button>
+        <button id="refreshNumberBtn" type="button" class="secondary">Refresh</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>2. Decentralized Voting</h2>
+      <div class="row">
+        <select id="candidateSelect">
+          <option value="">Load candidates or type below</option>
+        </select>
+        <input id="candidateInput" type="text" placeholder="Candidate name (e.g., Alice)" />
+        <button id="voteBtn" type="button">Cast Vote</button>
+      </div>
+      <div class="row mt-sm">
+        <button id="loadResultsBtn" type="button" class="secondary">Refresh Vote Results</button>
+      </div>
+      <ul id="resultsList" class="results"></ul>
+    </section>
+
+    <section class="card">
+      <h2>Transaction & Status Log</h2>
+      <pre id="statusLog" class="log">Ready. Paste your deployed contract addresses and ABIs in app.js.</pre>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
