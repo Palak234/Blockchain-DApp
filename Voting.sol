@@ -2,46 +2,49 @@
 pragma solidity ^0.8.0;
 
 contract Voting {
-    // Mapping to keep track of votes for each candidate
-    mapping(string => uint256) public votesReceived;
+    struct Candidate {
+        uint256 id;
+        string name;
+        uint256 voteCount;
+    }
 
-    // Track addresses that have already cast a vote
+    Candidate[] private candidates;
     mapping(address => bool) public hasVoted;
 
-    // List of candidate names
-    string[] public candidateList;
+    event VoteCast(address indexed voter, uint256 indexed candidateId, string candidateName);
 
-    // Constructor to initialize candidates when the contract is deployed
     constructor(string[] memory candidateNames) {
-        candidateList = candidateNames;
-    }
-
-    // Helper to verify candidate exists in candidateList
-    function isValidCandidate(string memory candidate) public view returns (bool) {
-        for (uint256 i = 0; i < candidateList.length; i++) {
-            if (keccak256(bytes(candidateList[i])) == keccak256(bytes(candidate))) {
-                return true;
-            }
+        require(candidateNames.length >= 3, "At least 3 candidates required");
+        for (uint256 i = 0; i < candidateNames.length; i++) {
+            candidates.push(Candidate({
+                id: i,
+                name: candidateNames[i],
+                voteCount: 0
+            }));
         }
-        return false;
     }
 
-    // Return all initialized candidate names
-    function getCandidates() public view returns (string[] memory) {
-        return candidateList;
+    function getCandidateCount() public view returns (uint256) {
+        return candidates.length;
     }
 
-    // Function to view total votes for a specific candidate
-    function totalVotesFor(string memory candidate) public view returns (uint256) {
-        return votesReceived[candidate];
+    function getCandidate(uint256 candidateId)
+        public
+        view
+        returns (uint256 id, string memory name, uint256 voteCount)
+    {
+        require(candidateId < candidates.length, "Invalid candidate ID");
+        Candidate storage c = candidates[candidateId];
+        return (c.id, c.name, c.voteCount);
     }
 
-    // Function to vote for a candidate once per address
-    function voteForCandidate(string memory candidate) public {
-        require(!hasVoted[msg.sender], "You have already voted");
-        require(isValidCandidate(candidate), "Invalid candidate");
+    function vote(uint256 candidateId) public {
+        require(!hasVoted[msg.sender], "Address has already voted");
+        require(candidateId < candidates.length, "Invalid candidate ID");
 
         hasVoted[msg.sender] = true;
-        votesReceived[candidate] += 1;
+        candidates[candidateId].voteCount += 1;
+
+        emit VoteCast(msg.sender, candidateId, candidates[candidateId].name);
     }
 }
