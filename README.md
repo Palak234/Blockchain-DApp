@@ -11,8 +11,9 @@ This repository contains the Solidity smart contracts (`SimpleStorage.sol` and `
 
 ## Deployment Details
 - **Network:** Ethereum Sepolia Testnet (`Chain ID: 11155111`)
-- **SimpleStorage Contract Address:** `0xADD73473A1C3FBd817cF628615E264414080b3bd`
-- **Voting Contract Address:** `0x78A395020f1117A6388D2C04a9111aC096F2d37C`
+- **SimpleStorage Contract Address:** `0x9D7f74d0C41E726EC95884E0e97Fa6129e3b5E99`
+- **Voting Contract Address:** `0x6e6d69e39c707F4D37c9d4e2f5102BB8A4Ea7b33`
+> **Note:** Smart contract addresses change whenever a contract is newly deployed. Update the addresses above and in your frontend configuration if you deploy a fresh instance.
 
 ## Running the DApp
 1. Open the project folder in **VS Code** and serve `index.html` using **Live Server** (or a local HTTP server).
